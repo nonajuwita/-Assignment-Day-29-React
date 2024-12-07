@@ -1,11 +1,6 @@
 import React from "react";
 
-// Corrected imports
-import coffeeLatteImg from "../../assets/coffee-latte.jpg";
-import coffeeCappuccinoImg from "../../assets/coffee-cappuccino.jpg";
-import croissantImg from "../../assets/croissant.jpg";
-
-const Content = () => {
+const Content = ({ menuItems }) => {
   return (
     <div>
       {/* About Section */}
@@ -23,36 +18,15 @@ const Content = () => {
         <div className="space-y-6 text-center">
           <h2 className="text-3xl font-semibold text-gray-800"> Menu</h2>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {/* Coffee Latte Item */}
-            <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
-              <img src={coffeeLatteImg} alt="Coffee Latte" className="object-cover w-full h-48 rounded-md sm:h-56 md:h-64 lg:h-72" />
-              <h3 className="mt-4 text-xl font-semibold text-gray-800">Coffee Latte</h3>
-              <p className="mt-2 text-gray-600">A rich and smooth espresso with steamed milk, perfect for any time of the day.</p>
-              <p className="mt-4 text-lg font-semibold text-gray-800">Rp.50.000</p>
-            </div>
-            {/* Cappuccino Item */}
-            <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
-              <img src={coffeeCappuccinoImg} alt="Cappuccino" className="object-cover w-full h-48 rounded-md sm:h-56 md:h-64 lg:h-72" />
-              <h3 className="mt-4 text-xl font-semibold text-gray-800">Cappuccino</h3>
-              <p className="mt-2 text-gray-600">A balanced mix of espresso, steamed milk, and frothy foam.</p>
-              <p className="mt-4 text-lg font-semibold text-gray-800">Rp.50.000</p>
-            </div>
-            {/* Croissant Item */}
-            <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
-              <img src={croissantImg} alt="Croissant" className="object-cover w-full h-48 rounded-md sm:h-56 md:h-64 lg:h-72" />
-              <h3 className="mt-4 text-xl font-semibold text-gray-800">Croissant</h3>
-              <p className="mt-2 text-gray-600">Buttery, flaky, and freshly baked – a perfect snack with your coffee.</p>
-              <p className="mt-4 text-lg font-semibold text-gray-800">Rp.50.000</p>
-            </div>
-            {/* Additional Croissant Items (if any) */}
-            {Array(4).fill(
-              <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
-                <img src={croissantImg} alt="Croissant" className="object-cover w-full h-48 rounded-md sm:h-56 md:h-64 lg:h-72" />
-                <h3 className="mt-4 text-xl font-semibold text-gray-800">Croissant</h3>
-                <p className="mt-2 text-gray-600">Buttery, flaky, and freshly baked – a perfect snack with your coffee.</p>
-                <p className="mt-4 text-lg font-semibold text-gray-800">Rp.50.000</p>
+            {/* Iterate through menu items */}
+            {menuItems.map((item, index) => (
+              <div key={index} className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+                <img src={item.image} alt={item.name} className="object-cover w-full h-48 rounded-md sm:h-56 md:h-64 lg:h-72" />
+                <h3 className="mt-4 text-xl font-semibold text-gray-800">{item.name}</h3>
+                <p className="mt-2 text-gray-600">{item.description}</p>
+                <p className="mt-4 text-lg font-semibold text-gray-800">{item.price}</p>
               </div>
-            )}
+            ))}
           </div>
         </div>
       </section>
@@ -109,9 +83,11 @@ const Content = () => {
               <option value="" disabled selected>
                 Select Your Item
               </option>
-              <option value="Coffee Latte">Coffee Latte - Rp.50.000</option>
-              <option value="Cappuccino">Cappuccino - Rp.50.000</option>
-              <option value="Croissant">Croissant - Rp.50.000</option>
+              {menuItems.map((item, index) => (
+                <option key={index} value={item.name}>
+                  {item.name} - {item.price}
+                </option>
+              ))}
             </select>
             <textarea
               placeholder="Special Requests or Instructions"
